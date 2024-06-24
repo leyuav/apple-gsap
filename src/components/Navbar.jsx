@@ -14,10 +14,10 @@ const Navbar = () => {
         <div className="flex flex-1 justify-center max-sm:hidden">
           {navLists.map((nav) => (
             <div
-              key={nav}
+              key={nav.id}
               className="px-5 text-sm cursor-pointer text-gray hover:text-white transition-all"
             >
-              {nav}
+              <a href={`#${nav.id}`}>{nav.title}</a>
             </div>
           ))}
         </div>
@@ -39,10 +39,10 @@ const Navbar = () => {
               />
               {navLists.map((nav) => (
                 <div
-                  key={nav}
+                  key={nav.id}
                   className="py-3 text-lg cursor-pointer text-gray hover:text-white transition-all"
                 >
-                  {nav}
+                  <a href={`#${nav.id}`}>{nav.title}</a>
                 </div>
               ))}
             </div>
