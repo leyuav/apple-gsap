@@ -9,6 +9,7 @@ const VideoCarousel = () => {
   const videoSpanRef = useRef([]);
   const videoDivRef = useRef([]);
 
+  // video and indicator
   const [video, setVideo] = useState({
     isEnd: false,
     startPlay: false,
@@ -21,15 +22,22 @@ const VideoCarousel = () => {
 
   const { isEnd, isLastVideo, isPlaying, startPlay, videoId } = video;
 
-  useEffect(() => {
-    if (loadedData.length > 3) {
-      if (!isPlaying) {
-        videoRef.current[videoId].pause();
-      } else {
-        startPlay && videoRef.current[videoId].play();
-      }
-    }
-  }, [videoId, startPlay, isPlaying, loadedData]);
+  useGSAP(() => {
+    // video animation to play the video when it is in the view
+    gsap.to('#video', {
+      scrollTrigger: {
+        trigger: '#video',
+        toggleActions: 'restart none none none',
+      },
+      onComplete: () => {
+        setVideo((pre) => ({
+          ...pre,
+          startPlay: true,
+          isPlaying: true,
+        }));
+      },
+    });
+  }, [isEnd, videoId]);
 
   useEffect(() => {
     const currentProgress = 0;
@@ -45,6 +53,46 @@ const VideoCarousel = () => {
     }
   }, [videoId, startPlay]);
 
+  useEffect(() => {
+    if (loadedData.length > 3) {
+      if (!isPlaying) {
+        videoRef.current[videoId].pause();
+      } else {
+        startPlay && videoRef.current[videoId].play();
+      }
+    }
+  }, [startPlay, videoId, isPlaying, loadedData]);
+
+  // all actions we can do to the video
+  const handleProcess = (type, i) => {
+    switch (type) {
+      case 'video-end':
+        setVideo((pre) => ({ ...pre, isEnd: true, videoId: i + 1 }));
+        break;
+
+      case 'video-last':
+        setVideo((pre) => ({ ...pre, isLastVideo: true }));
+        break;
+
+      case 'video-reset':
+        setVideo((pre) => ({ ...pre, videoId: 0, isLastVideo: false }));
+        break;
+
+      case 'pause':
+        setVideo((pre) => ({ ...pre, isPlaying: !pre.isPlaying }));
+        break;
+
+      case 'play':
+        setVideo((pre) => ({ ...pre, isPlaying: !pre.isPlaying }));
+        break;
+
+      default:
+        return video;
+    }
+  };
+
+  const handleLoadedMetadata = (i, e) => setLoadedData((pre) => [...pre, e]);
+
   return (
     <>
       <div className="flex items-center">
@@ -59,11 +107,12 @@ const VideoCarousel = () => {
                   muted
                   ref={(el) => (videoRef.current[i] = el)}
                   onPlay={() => {
-                    setVideo((prevVideo) => ({
-                      ...prevVideo,
+                    setVideo((pre) => ({
+                      ...pre,
                       isPlaying: true,
                     }));
                   }}
+                  onLoadedMetadata={(e) => handleLoadedMetadata(i, e)}
                 >
                   <source src={list.video} type="video/mp4" />
                 </video>
@@ -99,6 +148,13 @@ const VideoCarousel = () => {
           <img
             src={isLastVideo ? replayImg : !isPlaying ? playImg : pauseImg}
             alt={isLastVideo ? 'replay' : !isPlaying ? 'play' : 'pause'}
+            onClick={
+              isLastVideo
+                ? () => handleProcess('video-reset')
+                : !isPlaying
+                ? () => handleProcess('play')
+                : () => handleProcess('pause')
+            }
           />
         </button>
       </div>
