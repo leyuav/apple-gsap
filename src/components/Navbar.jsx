@@ -23,15 +23,15 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-7 max-sm:justify-end max-sm:flex-1">
-          <img src={searchImg} alt="search" width={18} height={18} />
-          <img src={bagImg} alt="basket" width={18} height={18} />
+          <img src={searchImg} alt="search" width={18} height={18} className="cursor-pointer" />
+          <img src={bagImg} alt="basket" width={18} height={18} className="cursor-pointer" />
           <RxHamburgerMenu
             className="text-white hidden max-sm:block"
             fontSize={25}
             onClick={() => setToggleMenu(true)}
           />
           {toggleMenu && (
-            <div className="w-full h-[100vh] flex flex-col items-center justify-center bg-black z-5 fixed top-0 left-0">
+            <div className="w-full h-[100vh] flex flex-col items-center justify-center bg-black z-10 fixed top-0 left-0">
               <MdClose
                 fontSize={30}
                 className="absolute top-4 right-4 cursor-pointer"
