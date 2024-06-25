@@ -1,8 +1,9 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ModelView from './ModelView';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { yellowImg } from '../utils';
+import * as THREE from 'three';
 
 const Model = () => {
   const [size, setSize] = useState('small');
@@ -13,6 +14,16 @@ const Model = () => {
   });
 
   // camera control for Model View
+  const cameraControlSmall = useRef();
+  const cameraControlLarge = useRef();
+
+  // models
+  const small = useRef(new THREE.Group());
+  const large = useRef(new THREE.Group());
+
+  // rotation of each model
+  const [smallRotation, setSmallRotation] = useState(0);
+  const [largeRotation, setLargeRotation] = useState(0);
 
   useGSAP(() => {
     gsap.to('#heading', {
