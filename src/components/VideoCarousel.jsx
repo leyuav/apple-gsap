@@ -37,6 +37,13 @@ const VideoCarousel = () => {
         }));
       },
     });
+
+    // slider animation
+    gsap.to('#slider', {
+      transform: `translateX(${-100 * videoId}%)`,
+      duration: 2,
+      ease: 'power2.inOut',
+    });
   }, [isEnd, videoId]);
 
   useEffect(() => {
@@ -79,7 +86,9 @@ const VideoCarousel = () => {
       }
 
       const animUpdate = () => {
-        anim.progress(videoRef.current[videoId] / highlightsSlides[videoId].videoDuration);
+        anim.progress(
+          videoRef.current[videoId].currentTime / highlightsSlides[videoId].videoDuration
+        );
       };
 
       if (isPlaying) {
@@ -139,6 +148,9 @@ const VideoCarousel = () => {
               <div className="w-full h-full flex-center rounded-3xl overflow-hidden bg-black">
                 <video
                   id="video"
+                  className={`${list.id === 2 && 'translate-x-44'}
+                    pointer-events-none
+                  `}
                   playsInline={true}
                   preload="auto"
                   muted
@@ -149,6 +161,9 @@ const VideoCarousel = () => {
                       isPlaying: true,
                     }));
                   }}
+                  onEnded={() =>
+                    i !== 3 ? handleProcess('video-end', i) : handleProcess('video-last')
+                  }
                   onLoadedMetadata={(e) => handleLoadedMetadata(i, e)}
                 >
                   <source src={list.video} type="video/mp4" />
