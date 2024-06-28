@@ -2,6 +2,7 @@ import gsap from 'gsap';
 import React from 'react';
 import { animateWithGsap } from '../utils/animations/animations';
 import { useGSAP } from '@gsap/react';
+import { exploreVideo } from '../utils';
 
 const Features = () => {
   useGSAP(() => {
@@ -20,6 +21,14 @@ const Features = () => {
           <div className="mt-32 mb-24 pl-24">
             <h2 className="text-5xl lg:text-7xl font-semibold">iPhone</h2>
             <h2 className="text-5xl lg:text-7xl font-semibold">Forged in titanium</h2>
+          </div>
+
+          <div className="flex-center flex-col sm:px-10">
+            <div className="relative h-[50vh] w-full flex items-center">
+              <video id='exploreVideo' playsInline className='w-full h-full object-cover object-center' preload='none' muted autoPlay ref={}>
+                <source src={exploreVideo} type="video/mp4" />
+              </video>
+            </div>
           </div>
         </div>
       </div>
