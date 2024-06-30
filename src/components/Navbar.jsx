@@ -33,7 +33,7 @@ const Navbar = () => {
             onClick={() => setToggleMenu(true)}
           />
           {toggleMenu && (
-            <div className="w-full h-[100vh] flex flex-col items-center justify-center bg-black z-10 fixed top-0 left-0">
+            <div className="w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-black z-10 fixed top-0 left-0">
               <MdClose
                 fontSize={30}
                 className="absolute top-4 right-4 cursor-pointer"
