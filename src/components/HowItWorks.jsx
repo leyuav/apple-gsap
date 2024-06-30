@@ -61,16 +61,15 @@ const HowItWorks = () => {
               </video>
             </div>
           </div>
+
           <p className="text-gray font-semibold text-center mt-3">Honkai: Star Rail</p>
-
-          <div className="hiw-text-container">
-            <div className="flex flex-1 justify-center flex-col">
-              <p className="hiw-text g_fadeIn">
-                A17 Pro is an entirely new class of iPhone chip that delivers our {''}
-                <span className="text-white">best graphic performance by far.</span>
-              </p>
-            </div>
-
+        </div>
+        <div className="hiw-text-container">
+          <div className="flex flex-1 justify-center flex-col">
+            <p className="hiw-text g_fadeIn">
+              A17 Pro is an entirely new class of iPhone chip that delivers our {''}
+              <span className="text-white">best graphic performance by far.</span>
+            </p>
             <p className="hiw-text g_fadeIn">
               Mobile <span className="text-white">games will look and feel so immersive,</span> with
               incredibly detailed environments and characters.
